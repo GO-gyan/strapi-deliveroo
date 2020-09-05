@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dishes",
+  "info": {
+    "name": "dish"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "descriptions": {
+      "type": "richtext"
+    },
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "price": {
+      "type": "float"
+    },
+    "restaurant": {
+      "model": "restaurant",
+      "via": "dishes"
+    }
+  }
+}
