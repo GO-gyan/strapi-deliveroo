@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { gql, useQuery, useApolloClient } from "@apollo/client";
 
@@ -14,6 +14,9 @@ import {
   Col,
   Row,
 } from "reactstrap";
+
+import Cart from "../components/cart/";
+import AppContext from "../context/AppContext";
 
 const GET_RESTAURANT_DISHES = gql`
   query GetDishList($id: ID!) {
@@ -35,7 +38,7 @@ const GET_RESTAURANT_DISHES = gql`
 const Restaurants = () => {
   const routes = useRouter();
   const { id } = routes.query;
-  console.log(routes);
+  const appContext = useContext(AppContext);
   const { loading, error, data } = useQuery(GET_RESTAURANT_DISHES, {
     variables: { id },
   });
@@ -62,7 +65,7 @@ const Restaurants = () => {
                   </CardBody>
                   <div className="card-footer">
                     <Button
-                      //onClick={this.addItem.bind(this, res)}
+                      onClick={() => appContext.addItem(res)}
                       outline
                       color="primary"
                     >
@@ -95,9 +98,9 @@ const Restaurants = () => {
             </div>
           </Col>
           <Col xs="3" style={{ padding: 0 }}>
-            {/* <div>
-                <Cart isAuthenticated={isAuthenticated} />
-              </div> */}
+            <div>
+              <Cart />
+            </div>
           </Col>
         </Row>
       </>
